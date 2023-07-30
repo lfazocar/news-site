@@ -22,6 +22,10 @@ class User < ApplicationRecord
   # 0 = user, 1 = author, 2 = admin
   enum :role, [:user, :author, :admin]
 
+  # Relations
+  has_many :articles
+  has_many :comments
+
   # Validations
   validates :username, uniqueness: true, presence: true
 end
