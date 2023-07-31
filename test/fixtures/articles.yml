@@ -15,10 +15,10 @@ one:
   title: MyString
   content: MyText
   image: MyString
-  user: one
+  user: admin
 
 two:
   title: MyString
   content: MyText
   image: MyString
-  user: two
+  user: admin
