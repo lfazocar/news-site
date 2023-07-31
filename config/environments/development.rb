@@ -67,4 +67,22 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # Devise mailing
+  config.action_mailer.default_url_options = { host: "localhost", port: 3000 }
+  config.action_mailer.perform_caching = false
+  config.action_mailer.delivery_method = :sendmail
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_options = {from: 'no-reply@news_site.com'}
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+  :user_name => ENV["email_username"],
+  :password => ENV["email_password"],
+  :address => ENV["email_address"],
+  :host => ENV["email_host"],
+  :port => ENV["email_port"],
+  :authentication => :cram_md5
+  }
+
 end
