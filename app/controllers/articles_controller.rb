@@ -1,6 +1,15 @@
 class ArticlesController < ApplicationController
   before_action :set_article, only: %i[ show edit update destroy ]
 
+  # Role permissions
+  before_action :authenticate_user!, except: %i[ index show ]
+  before_action only: %i[ new create ] do
+    authorize_request(["author", "admin"])
+  end
+  before_action only: %i[ edit update destroy] do
+    authorize_request(["admin"])
+  end
+
   # GET /articles or /articles.json
   def index
     @articles = Article.all
@@ -22,6 +31,7 @@ class ArticlesController < ApplicationController
   # POST /articles or /articles.json
   def create
     @article = Article.new(article_params)
+    @article.user_id = current_user.id
 
     respond_to do |format|
       if @article.save
