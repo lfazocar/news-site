@@ -8,3 +8,28 @@
 
   <%= button_to "Destroy this article", @article, method: :delete %>
 </div>
+
+<div>
+  <ul>
+    <% @comments.each do |comment| %>
+      <div>
+        <p><strong><%= User.find(comment.user_id).username %></strong> commented:</p>
+        <p><%= comment.content %></p>
+        <p>at <%= comment.created_at %></p>
+      </div>
+    <% end %>
+  </ul>
+</div>
+
+<% if user_signed_in? %>
+  <%= form_with model: [@article, @article.comments.build], url: comment_article_path do |form| %>
+    <p>
+      <%= form.label :content %>
+      <%= form.text_area :content %>
+    </p>
+
+    <p>
+      <%= form.submit %>
+    </p>
+  <% end %>
+<% end %>

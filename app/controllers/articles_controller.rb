@@ -17,6 +17,7 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1 or /articles/1.json
   def show
+    @comments = Comment.where(article_id: params[:id])
   end
 
   # GET /articles/new
@@ -26,6 +27,12 @@ class ArticlesController < ApplicationController
 
   # GET /articles/1/edit
   def edit
+  end
+
+  # POST /articles/1
+  def comment
+    @comment = Comment.create(comment_params.merge(user_id: current_user.id, article_id: params[:id]))
+    redirect_to article_path
   end
 
   # POST /articles or /articles.json
@@ -76,5 +83,9 @@ class ArticlesController < ApplicationController
     # Only allow a list of trusted parameters through.
     def article_params
       params.require(:article).permit(:title, :content, :image, :user_id)
+    end
+
+    def comment_params
+      params.require(:comment).permit(:content)
     end
 end
