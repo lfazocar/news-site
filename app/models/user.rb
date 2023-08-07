@@ -24,7 +24,7 @@ class User < ApplicationRecord
 
   # Relations
   has_many :articles
-  has_many :comments
+  has_many :comments, dependent: :nullify
 
   # Validations
   validates :username, uniqueness: true, presence: true

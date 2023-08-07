@@ -26,7 +26,7 @@
   <% unless @comments.empty? %>
     <% @comments.each do |comment| %>
       <div class="card mb-3">
-        <h5 class="card-header"><strong><%= User.find(comment.user_id).username %></strong> commented:</h5>
+        <h5 class="card-header"><strong><%= comment.user_id.nil? ? 'A deleted user' : User.find(comment.user_id).username %></strong> commented:</h5>
         <div class="card-body">
           <p class="card-text"><%= comment.content %></p>
         </div>
