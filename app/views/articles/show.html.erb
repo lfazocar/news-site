@@ -4,36 +4,71 @@
   </div>
 <% end %>
 
-<%= render @article %>
+<div id="<%= dom_id @article %>" class="mb-3">
+  <div class="text-center mb-3">
+    <%= image_tag @article.image, class:"img-fluid" %>
+  </div>
+  <h1><%= @article.title %></h1>
+  <h6>Written by <%= @article.user.username %> <small class="text-body-secondary"><%= @article.created_at.strftime("%d - %m - %Y")%></small></h6>
 
-<div>
-  <%= link_to "Edit this article", edit_article_path(@article) %> |
-  <%= link_to "Back to articles", articles_path %>
+  <p>
+    <%= @article.content %>
+  </p>
 
-  <%= button_to "Destroy this article", @article, method: :delete %>
+</div>
+
+<div class="text-center mb-3">
+  <%= link_to "Back to articles", articles_path, class: "btn btn-light" %>
 </div>
 
 <div>
-  <ul>
+  <h2 class="mb-3">Comments</h2>
+  <% unless @comments.empty? %>
     <% @comments.each do |comment| %>
-      <div>
-        <p><strong><%= User.find(comment.user_id).username %></strong> commented:</p>
-        <p><%= comment.content %></p>
-        <p>at <%= comment.created_at %></p>
+      <div class="card mb-3">
+        <h5 class="card-header"><strong><%= User.find(comment.user_id).username %></strong> commented:</h5>
+        <div class="card-body">
+          <p class="card-text"><%= comment.content %></p>
+        </div>
+        <div class="card-footer">
+          <% if (Time.now - comment.created_at).round > 1.day %>
+            at <%= comment.created_at.strftime("%d - %m - %Y") %>
+          <% else %>
+          <%= time_passed(comment.created_at) %>
+          <% end %>
+        </div>
       </div>
     <% end %>
-  </ul>
+  <% else %>
+    <div class="card mb-3">
+      <div class="card-body">No one has commented yet</div>
+    </div>
+  <% end %>
 </div>
 
 <% if user_signed_in? %>
+  <%# Comment form %>
   <%= form_with model: [@article, @article.comments.build], url: comment_article_path do |form| %>
-    <p>
-      <%= form.label :content %>
-      <%= form.text_area :content %>
-    </p>
+    <div class="mb-3">
+      <%= form.label :content, "Leave a comment", class: "form-label fs-2 fw-medium" %>
+      <%= form.text_area :content, class: "form-control", placeholder: "Your comment here...", rows: 5 %>
+    </div>
 
-    <p>
-      <%= form.submit %>
-    </p>
+    <div class="text-center mb-3">
+      <%= form.submit class: "btn btn-light" %>
+    </div>
+  <% end %>
+
+  <%# Admin section %>
+  <% if current_user.role == 'admin' %>
+    <div class="card text-center">
+      <h5 class="card-header">Admin panel</h5>
+      <div class="card-body">
+        <div class="d-flex justify-content-evenly">
+          <%= link_to "Edit this article", edit_article_path(@article), class: "btn btn-light" %>
+          <%= button_to "Destroy this article", @article, method: :delete, class: "btn btn-danger" %>
+        </div>
+      </div>
+    </div>
   <% end %>
 <% end %>
