@@ -1,6 +1,9 @@
 module ArticlesHelper
   def time_passed(time)
     seconds = (Time.now - time).round
+    if seconds == 0
+      return 'Just now'
+    end
     minutes, seconds = seconds.divmod(60)
     hours, minutes = minutes.divmod(60)
     result = ""

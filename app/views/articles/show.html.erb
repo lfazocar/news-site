@@ -32,7 +32,7 @@
         </div>
         <div class="card-footer">
           <% if (Time.now - comment.created_at).round > 1.day %>
-            at <%= comment.created_at.strftime("%d - %m - %Y") %>
+            <%= comment.created_at.strftime("%d - %m - %Y") %>
           <% else %>
           <%= time_passed(comment.created_at) %>
           <% end %>
