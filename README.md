@@ -4,7 +4,7 @@ Web app for a news site or other similar articles built with Ruby on Rails.
 
 ## Description
 
-News web app with a fully functioning user authentication system set up using Devise. There are 3 roles available: **User**, who can only view and comment articles, **Author**, who can also publish articles, and **Admin** who can do all of the above in addition to editing and deleting articles.
+News web app with a fully functioning user authentication system set up using Devise. There are 3 roles available: **User**, who can only view and comment articles, **Author**, who can also publish articles, and **Admin** who can do all of the above in addition to editing and deleting articles. Guests on the other hand can only view articles and comments.
 
 The app also features a mailing system for user registration confirmation and password recovery and a series of tests for checking that the user roles have the correct permissions.
 
