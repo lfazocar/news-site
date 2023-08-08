@@ -12,12 +12,12 @@ class ArticlesController < ApplicationController
 
   # GET /articles or /articles.json
   def index
-    @articles = Article.all
+    @articles = Article.all.order(created_at: :desc)
   end
 
   # GET /articles/1 or /articles/1.json
   def show
-    @comments = Comment.where(article_id: params[:id])
+    @comments = Comment.where(article_id: params[:id]).order(:created_at)
   end
 
   # GET /articles/new
